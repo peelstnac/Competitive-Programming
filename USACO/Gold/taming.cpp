@@ -22,10 +22,13 @@ int cmp(int A, int B)
     return mcmp[A][B] = cnt;
 }
 
-int base(int n) {
+int base(int n)
+{
     int cnt = 0;
-    for(int i=0; i<=n; i++) {
-        if (fj[i] != 0) cnt++;
+    for (int i = 0; i <= n; i++)
+    {
+        if (fj[i] != 0)
+            cnt++;
     }
     return cnt;
 }
@@ -36,7 +39,8 @@ int f(int n, int k)
 {
     if (dp[n][k] != -1)
         return dp[n][k];
-    if (k == 1) return cmp(0, n);
+    if (k == 1)
+        return cmp(0, n);
     int ret = 1e9;
     for (int l = n; l >= k - 1; l--)
     {
