@@ -8,28 +8,28 @@ int main()
     freopen("moocast.out", "w", stdout);
     typedef struct
     {
-        double x, y;
+        long long x, y;
     } p;
     int n;
     cin >> n;
     vector<p> points;
     for (int i = 0; i < n; i++)
     {
-        double x, y;
+        long long x, y;
         cin >> x >> y;
         p pt;
         pt.x = x;
         pt.y = y;
         points.push_back(pt);
     }
-    vector<pair<double, pair<int, int>>> edges;
+    vector<pair<long long, pair<int, int>>> edges;
     vector<int> G[n];
     for (int i = 0; i < n; i++)
     {
         for (int j = i + 1; j < n; j++)
         {
             p A = points[i], B = points[j];
-            double dist = sqrt((A.x - B.x) * (A.x - B.x) +
+            long long dist = ((A.x - B.x) * (A.x - B.x) +
                                (A.y - B.y) * (A.y - B.y));
             G[i].push_back(j);
             G[j].push_back(i);
@@ -38,59 +38,41 @@ int main()
     }
     sort(edges.begin(), edges.end());
     int len = edges.size();
-    double ans;
-    for (int i = len - 1; i >= 0; i--)
-    {
-        // Remove the edge
-        ans = edges[i].first;
-        int cmp = 0;
-        pair<int, int> temp = edges[i].second;
-        for (int j = 0; j < G[temp.first].size(); j++)
-        {
-            if (G[temp.first][j] == temp.second)
-            {
-                G[temp.first][j] = -1;
-                break;
-            }
-        }
-        for (int j = 0; j < G[temp.second].size(); j++)
-        {
-            if (G[temp.second][j] == temp.first)
-            {
-                G[temp.second][j] = -1;
-                break;
-            }
-        }
-        stack<int> s;
-        bool vis[n];
-        memset(vis, 0, sizeof(vis));
-        for (int j = 0; j < n; j++)
-        {
-            if (vis[j])
-                continue;
-            cmp++;
-            if (cmp > 1)
-                break;
-            vis[j] = 1;
-            s.push(j);
-            while (!s.empty())
-            {
-                int x = s.top();
-                s.pop();
-                for (auto u : G[x])
-                {
-                    if (u == -1)
-                        continue;
-                    if (vis[u])
-                        continue;
-                    vis[u] = 1;
-                    s.push(u);
-                }
-            }
-        }
-        if (cmp > 1)
-            break;
+    int id[n][n];
+    for(int i=0; i<len; i++) {
+    	auto u = edges[i].second;
+    	id[u.first][u.second] = i;
+    	id[u.second][u.first] = i;
     }
-    cout << ceil(ans * ans) << "\n";
+    int ans, L = 0, R = len - 1;
+    while(L <= R) {
+    	int mid = (L+R)/2;
+    	int cmp = 0;
+    	stack<int> s;
+    	bool vis[n];
+    	memset(vis, 0, sizeof(vis));
+    	for(int i=0; i<n; i++) {
+    		if(vis[i]) continue;
+    		cmp++;
+    		vis[i] = 1;
+    		s.push(i);
+    		while(!s.empty()) {
+    			int x = s.top();
+    			s.pop();
+    			for(auto u : G[x]) {
+    				if(vis[u] || (id[x][u] > mid)) continue;
+    				vis[u] = 1;
+    				s.push(u);
+    			}
+    		}
+    	}
+    	if(cmp > 1) {
+    		L = mid+1;
+    	} else {
+    		R = mid-1;
+    		ans = mid;
+    	}
+    }
+    cout << edges[ans].first << "\n";
     return 0;
 }
