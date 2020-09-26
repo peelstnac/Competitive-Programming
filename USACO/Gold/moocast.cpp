@@ -1,4 +1,3 @@
-// THIS IS INCORRECT
 #include <bits/stdc++.h>
 using namespace std;
 
