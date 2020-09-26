@@ -4,8 +4,10 @@ using namespace std;
 
 int main()
 {
+#ifndef LOCAL
     freopen("moocast.in", "r", stdin);
     freopen("moocast.out", "w", stdout);
+#endif
     typedef struct
     {
         long long x, y;
