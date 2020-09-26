@@ -6,8 +6,10 @@ int mod = 1e9 + 7;
 
 signed main()
 {
+#ifndef LOCAL
     freopen("spainting.in", "r", stdin);
     freopen("spainting.out", "w", stdout);
+#endif
     int N, M, K;
     cin >> N >> M >> K;
     int ex[N + 1];

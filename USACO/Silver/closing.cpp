@@ -3,8 +3,10 @@ using namespace std;
 
 int main()
 {
+#ifndef LOCAL
     freopen("closing.in", "r", stdin);
     freopen("closing.out", "w", stdout);
+#endif;
     int n, m;
     cin >> n >> m;
     vector<int> G[n + 1];

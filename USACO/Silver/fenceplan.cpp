@@ -3,8 +3,10 @@ using namespace std;
 
 int main()
 {
+#ifndef LOCAL
     freopen("fenceplan.in", "r", stdin);
     freopen("fenceplan.out", "w", stdout);
+#endif
     int n, m;
     cin >> n >> m;
     pair<int, int> pos[n + 1];

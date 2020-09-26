@@ -18,8 +18,10 @@ int dist(point A, point B)
 
 int main()
 {
+#ifndef LOCAL
     freopen("moocast.in", "r", stdin);
     freopen("moocast.out", "w", stdout);
+#endif
     int n;
     cin >> n;
     point in[n];

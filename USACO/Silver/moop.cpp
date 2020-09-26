@@ -5,8 +5,10 @@ using namespace std;
 
 int main()
 {
+#ifndef LOCAL
 	freopen("moop.in", "r", stdin);
 	freopen("moop.out", "w", stdout);
+#endif
 	int n;
 	cin >> n;
 	vector<pair<int, int>> p;
