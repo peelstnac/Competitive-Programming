@@ -31,7 +31,7 @@ int main()
         {
             p A = points[i], B = points[j];
             long long dist = ((A.x - B.x) * (A.x - B.x) +
-                               (A.y - B.y) * (A.y - B.y));
+                              (A.y - B.y) * (A.y - B.y));
             G[i].push_back(j);
             G[j].push_back(i);
             edges.push_back({dist, {i, j}});
@@ -40,39 +40,49 @@ int main()
     sort(edges.begin(), edges.end());
     int len = edges.size();
     int id[n][n];
-    for(int i=0; i<len; i++) {
-    	auto u = edges[i].second;
-    	id[u.first][u.second] = i;
-    	id[u.second][u.first] = i;
+    for (int i = 0; i < len; i++)
+    {
+        auto u = edges[i].second;
+        id[u.first][u.second] = i;
+        id[u.second][u.first] = i;
     }
     int ans, L = 0, R = len - 1;
-    while(L <= R) {
-    	int mid = (L+R)/2;
-    	int cmp = 0;
-    	stack<int> s;
-    	bool vis[n];
-    	memset(vis, 0, sizeof(vis));
-    	for(int i=0; i<n; i++) {
-    		if(vis[i]) continue;
-    		cmp++;
-    		vis[i] = 1;
-    		s.push(i);
-    		while(!s.empty()) {
-    			int x = s.top();
-    			s.pop();
-    			for(auto u : G[x]) {
-    				if(vis[u] || (id[x][u] > mid)) continue;
-    				vis[u] = 1;
-    				s.push(u);
-    			}
-    		}
-    	}
-    	if(cmp > 1) {
-    		L = mid+1;
-    	} else {
-    		R = mid-1;
-    		ans = mid;
-    	}
+    while (L <= R)
+    {
+        int mid = (L + R) / 2;
+        int cmp = 0;
+        stack<int> s;
+        bool vis[n];
+        memset(vis, 0, sizeof(vis));
+        for (int i = 0; i < n; i++)
+        {
+            if (vis[i])
+                continue;
+            cmp++;
+            vis[i] = 1;
+            s.push(i);
+            while (!s.empty())
+            {
+                int x = s.top();
+                s.pop();
+                for (auto u : G[x])
+                {
+                    if (vis[u] || (id[x][u] > mid))
+                        continue;
+                    vis[u] = 1;
+                    s.push(u);
+                }
+            }
+        }
+        if (cmp > 1)
+        {
+            L = mid + 1;
+        }
+        else
+        {
+            R = mid - 1;
+            ans = mid;
+        }
     }
     cout << edges[ans].first << "\n";
     return 0;
